@@ -65,7 +65,7 @@ String htmlPage() {
          "    document.getElementById('longitude').innerHTML = 'Longitude: ' + data.longitude;" +
          "  });" +
          "}" +
-         "setInterval(fetchData, 1000);" + // Fetch data every second
+         "setInterval(fetchData, 100);" + 
          "</script></head><body>" +
          "<div class='container'>" +
          "<h1>ESP32 Sensor Dashboard</h1>" +
@@ -156,5 +156,5 @@ void loop() {
   longitude += 0.1;
   if (longitude > 180) longitude = -180;
 
-  delay(100); // 1-second delay
+  delay(100); // 
 }
