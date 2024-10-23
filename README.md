@@ -14,12 +14,14 @@ The ESP32 acts as both a controller and a web server, creating its own Wi-Fi net
 ## Display Structure
 
 ### Nextion Display Pages
-#### Page 0: Primary Dashboard
+#### Page 0 (Primary Dashboard)
 - **Gauge Angle (`page0.z0.val`):** Represents the speedometer on the display. Calculated as `315 + (1.04 * speed)`. If the calculated angle exceeds 360, it wraps around by subtracting 360.
 - **Battery Temperature (`page0.batteryTemp.txt`):** Shows the current temperature of the battery in Celsius.
 - **Acceleration (`page0.acceleration.txt`):** Displays the current acceleration in m/s².
 
-#### Page 1: Detailed Sensor Data
+![Page 0](page1.png)
+
+#### Page 1 (Detailed Sensor Data)
 - **Torque (`page1.torque.txt`):** Displays the current torque in Nm.
 - **Battery Temperature (`page1.batteryTemp.txt`):** Same as on Page 0, showing the battery temperature.
 - **Latitude (`page1.latitude.txt`):** Displays the current latitude position.
@@ -27,6 +29,8 @@ The ESP32 acts as both a controller and a web server, creating its own Wi-Fi net
 - **Acceleration (`page1.acceleration.txt`):** Displays acceleration, same as on Page 0.
 - **Current (`page1.current.txt`):** Displays the current drawn by the system in amps.
 - **Voltage (`page1.voltage.txt`):** Displays the voltage of the battery in volts.
+
+![Page 1](page2.png)
 
 ### Web-Based Dashboard
 The web-based dashboard displays the same sensor values as the Nextion display, with updates every second. The values are fetched using AJAX calls to the `/sensorData` endpoint and updated in real-time.
@@ -72,20 +76,14 @@ These libraries are essential for the asynchronous web server functionality.
 4. **View on Nextion Display:**
    - The sensor values will also be visible on the Nextion display, with speed represented as a gauge.
 
-## Screenshots
-- **Page 0 (Primary Dashboard):** Shows the gauge angle, battery temperature, and acceleration.
-- **Page 1 (Detailed Sensor Data):** Displays torque, battery temperature, latitude, longitude, acceleration, current, and voltage.
-
-(Add screenshots here if available)
-
 ## Future Improvements
 - Integrate real sensor data from connected hardware.
 - Add support for more detailed graphics and charts on the web-based dashboard.
 - Implement error handling for sensor communication and data transmission.
 
 ## License
-This project is licensed under the MIT License. Feel free to use, modify, and distribute it as needed.
+This project is licensed under the MIT License.
 
 ## Author
-Developed by [Your Name]. If you have any questions or suggestions, feel free to reach out.
+Developed by Jaspartap Goomer. If you have any questions or suggestions, feel free to reach out.
 
