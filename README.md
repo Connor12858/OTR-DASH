@@ -31,7 +31,7 @@ The ESP32 acts as both a controller and a web server, creating its own Wi-Fi net
 - **Voltage (`page1.voltage.txt`):** Displays the voltage of the battery in volts.
 
 ![Page 1](page2.png)
-
+![Web Portal](page3.png)
 ### Web-Based Dashboard
 The web-based dashboard displays the same sensor values as the Nextion display, with updates every second. The values are fetched using AJAX calls to the `/sensorData` endpoint and updated in real-time.
 
