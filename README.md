@@ -33,10 +33,10 @@ The ESP32 acts as both a controller and a web server, creating its own Wi-Fi net
 ![Page 1](page2.png)
 ![Web Portal](page3.png)
 ### Web-Based Dashboard
-The web-based dashboard displays the same sensor values as the Nextion display, with updates every second. The values are fetched using AJAX calls to the `/sensorData` endpoint and updated in real-time.
+The web-based dashboard displays the same sensor values as the Nextion display, with updates 0.1 second. The values are fetched using AJAX calls to the `/sensorData` endpoint and updated in real-time.
 
 #### AJAX Logic
-- The webpage runs a JavaScript function that periodically (every second) sends a request to the ESP32 for the latest sensor values.
+- The webpage runs a JavaScript function that periodically (every 0.1 second) sends a request to the ESP32 for the latest sensor values.
 - The ESP32 responds with a JSON-formatted string containing the current sensor data.
 - The JavaScript then updates the corresponding HTML elements on the page, creating a seamless real-time experience without the need for page reloads.
 
@@ -72,7 +72,7 @@ These libraries are essential for the asynchronous web server functionality.
 2. **Access the Web Portal:**
    - Open a web browser and enter the ESP32’s IP address (displayed on the serial monitor).
 3. **Monitor Real-Time Data:**
-   - The webpage will display the latest sensor values, updating every second.
+   - The webpage will display the latest sensor values, updating every 0.1 second.
 4. **View on Nextion Display:**
    - The sensor values will also be visible on the Nextion display, with speed represented as a gauge.
 
