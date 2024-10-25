@@ -1,6 +1,9 @@
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
-
+#include <Wire.h>
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+Adafruit_MPU6050 mpu;
 // Wi-Fi credentials
 const char* ssid = "OTR DASH";
 const char* password = "12345678";
@@ -83,7 +86,16 @@ String htmlPage() {
 void setup() {
   // Start Serial for debugging
   Serial.begin(115200);
-  
+   if (!mpu.begin()) {
+    Serial.println("Failed to find MPU6050 chip");
+    while (1) { delay(10); }
+  }
+  mpu.setAccelerometerRange(MPU6050_RANGE_4_G);
+  // Set gyroscope sensitivity to ±500 degrees/s
+  mpu.setGyroRange(MPU6050_RANGE_500_DEG);
+
+  // Set sample rate to 100 Hz
+  mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
   // Initialize UART2 for Nextion
   Nextion.begin(38400, SERIAL_8N1, 16, 17);
 
@@ -110,6 +122,9 @@ void setup() {
 }
 
 void loop() {
+    sensors_event_t a, g, temp;
+  // Get new sensor events with the readings
+  mpu.getEvent(&a, &g, &temp);
   // Calculate gauge angle based on speed
   float gaugeAngle = 315 + (1.04 * speed);
   if (gaugeAngle > 360) {
@@ -130,16 +145,13 @@ void loop() {
   sendToNextion("page1.acceleration.txt=\"" + String(acceleration) + "\"");
   sendToNextion("page1.current.txt=\"" + String(current) + "\"");
   sendToNextion("page1.voltage.txt=\"" + String(voltage) + "\"");
-
+acceleration=a.acceleration.y;
   // Simulate sensor values for testing
   speed += 1;
   if (speed > 260) speed = 0;
 
   batteryTemp += 0.1;
   if (batteryTemp > 50) batteryTemp = 0;
-
-  acceleration += 0.5;
-  if (acceleration > 10) acceleration = 0;
 
   torque += 2;
   if (torque > 100) torque = 0;
