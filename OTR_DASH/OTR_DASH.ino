@@ -3,16 +3,15 @@
 #include <Wire.h>
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
+
 Adafruit_MPU6050 mpu;
+
 // Wi-Fi credentials
 const char* ssid = "OTR DASH";
 const char* password = "12345678";
 
 // Create AsyncWebServer on port 80
 AsyncWebServer server(80);
-
-// Initialize UART2 for Nextion (TX: GPIO17, RX: GPIO16)
-HardwareSerial Nextion(2); 
 
 // Variables to display
 float speed = 0;
@@ -85,19 +84,20 @@ String htmlPage() {
 
 void setup() {
   // Start Serial for debugging
-  Serial.begin(115200);
-   if (!mpu.begin()) {
+  Serial.begin(38400);
+
+  // Initialize Serial2 for the Nextion display
+
+
+  // Initialize MPU6050
+  if (!mpu.begin()) {
     Serial.println("Failed to find MPU6050 chip");
     while (1) { delay(10); }
   }
-  mpu.setAccelerometerRange(MPU6050_RANGE_4_G);
-  // Set gyroscope sensitivity to ±500 degrees/s
-  mpu.setGyroRange(MPU6050_RANGE_500_DEG);
 
-  // Set sample rate to 100 Hz
+  mpu.setAccelerometerRange(MPU6050_RANGE_4_G);
+  mpu.setGyroRange(MPU6050_RANGE_500_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
-  // Initialize UART2 for Nextion
-  Nextion.begin(38400, SERIAL_8N1, 16, 17);
 
   // Start Wi-Fi as an Access Point
   WiFi.softAP(ssid, password);
@@ -122,31 +122,14 @@ void setup() {
 }
 
 void loop() {
-    sensors_event_t a, g, temp;
   // Get new sensor events with the readings
+  sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
-  // Calculate gauge angle based on speed
-  float gaugeAngle = 315 + (1.04 * speed);
-  if (gaugeAngle > 360) {
-    gaugeAngle -= 360;
-  }
 
-  // Convert gaugeAngle to an integer
-  int intGaugeAngle = static_cast<int>(gaugeAngle);
+  // Update acceleration based on Y-axis
+  acceleration = a.acceleration.y;
 
-  // Update Nextion Display
-  sendToNextion("page0.z0.val=" + String(intGaugeAngle));
-  sendToNextion("page0.batteryTemp.txt=\"" + String(batteryTemp) + "\"");
-  sendToNextion("page0.acceleration.txt=\"" + String(acceleration) + "\"");
-  sendToNextion("page1.torque.txt=\"" + String(torque) + "\"");
-  sendToNextion("page1.batteryTemp.txt=\"" + String(batteryTemp) + "\"");
-  sendToNextion("page1.latitude.txt=\"" + String(latitude) + "\"");
-  sendToNextion("page1.longitude.txt=\"" + String(longitude) + "\"");
-  sendToNextion("page1.acceleration.txt=\"" + String(acceleration) + "\"");
-  sendToNextion("page1.current.txt=\"" + String(current) + "\"");
-  sendToNextion("page1.voltage.txt=\"" + String(voltage) + "\"");
-acceleration=a.acceleration.y;
-  // Simulate sensor values for testing
+  // Simulate sensor values for testing (remove this section in real use)
   speed += 1;
   if (speed > 260) speed = 0;
 
@@ -167,6 +150,31 @@ acceleration=a.acceleration.y;
 
   longitude += 0.1;
   if (longitude > 180) longitude = -180;
+float angle=300+(2.134*speed);
+if (angle>360) angle-=360;
+  // Update Nextion Display
+  sendToNextion("page1.z0.val=" + String(static_cast<int>(angle)));
+  sendToNextion("page1.speed.txt=\"" + String(speed) + "\"");
+  sendToNextion("page2.torque.txt=\"" + String(torque) + "\"");
+  sendToNextion("page3.batteryTemp.txt=\"" + String(batteryTemp) + "\"");
+  sendToNextion("page4.acceleration.txt=\"" + String(acceleration) + "\"");
+  sendToNextion("page5.latitude.txt=\"" + String(latitude) + "\"");
+  sendToNextion("page5.longitude.txt=\"" + String(longitude) + "\"");
+  sendToNextion("page5.longitude.txt=\"" + String(longitude) + "\"");
+  sendToNextion("page6.current.txt=\"" + String(current) + "\"");
+  sendToNextion("page7.voltage.txt=\"" + String(voltage) + "\"");
+  sendToNextion("page6.current.txt=\"" + String(current) + "\"");
 
-  delay(100); // 
+
+
+  sendToNextion("page8.torque.txt=\"" + String(torque) + "\"");
+  sendToNextion("page8.batteryTemp.txt=\"" + String(batteryTemp) + "\"");
+  sendToNextion("page8.acceleration.txt=\"" + String(acceleration) + "\"");
+  sendToNextion("page8.latitude.txt=\"" + String(latitude) + "\"");
+  sendToNextion("page8.longitude.txt=\"" + String(longitude) + "\"");
+  sendToNextion("page8.longitude.txt=\"" + String(longitude) + "\"");
+  sendToNextion("page8.current.txt=\"" + String(current) + "\"");
+  sendToNextion("page8.voltage.txt=\"" + String(voltage) + "\"");
+  sendToNextion("page8.current.txt=\"" + String(current) + "\"");
+  delay(100); // Delay for stability
 }
