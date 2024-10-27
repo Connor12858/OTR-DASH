@@ -14,23 +14,15 @@ The ESP32 acts as both a controller and a web server, creating its own Wi-Fi net
 ## Display Structure
 
 ### Nextion Display Pages
-#### Page 0 (Primary Dashboard)
-- **Gauge Angle (`page0.z0.val`):** Represents the speedometer on the display. Calculated as `315 + (1.04 * speed)`. If the calculated angle exceeds 360, it wraps around by subtracting 360.
-- **Battery Temperature (`page0.batteryTemp.txt`):** Shows the current temperature of the battery in Celsius.
-- **Acceleration (`page0.acceleration.txt`):** Displays the current acceleration in m/s².
-
-![Page 0](page1.png)
-
-#### Page 1 (Detailed Sensor Data)
-- **Torque (`page1.torque.txt`):** Displays the current torque in Nm.
-- **Battery Temperature (`page1.batteryTemp.txt`):** Same as on Page 0, showing the battery temperature.
-- **Latitude (`page1.latitude.txt`):** Displays the current latitude position.
-- **Longitude (`page1.longitude.txt`):** Displays the current longitude position.
-- **Acceleration (`page1.acceleration.txt`):** Displays acceleration, same as on Page 0.
-- **Current (`page1.current.txt`):** Displays the current drawn by the system in amps.
-- **Voltage (`page1.voltage.txt`):** Displays the voltage of the battery in volts.
-
-![Page 1](page2.png)
+![Nextion Page](page0.png)
+![Nextion Page](page1.png)
+![Nextion Page](page2.png)
+![Nextion Page](page3.png)
+![Nextion Page](page4.png)
+![Nextion Page](page5.png)
+![Nextion Page](page6.png)
+![Nextion Page](page7.png)
+![Nextion Page](page8.png)
 ![Web Portal](page3.png)
 ### Web-Based Dashboard
 The web-based dashboard displays the same sensor values as the Nextion display, with updates 0.1 second. The values are fetched using AJAX calls to the `/sensorData` endpoint and updated in real-time.
