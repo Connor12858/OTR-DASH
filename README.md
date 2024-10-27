@@ -23,7 +23,7 @@ The ESP32 acts as both a controller and a web server, creating its own Wi-Fi net
 ![Nextion Page](page6.png)
 ![Nextion Page](page7.png)
 ![Nextion Page](page8.png)
-![Web Portal](page3.png)
+![Web Portal](Web_Portal.png)
 ### Web-Based Dashboard
 The web-based dashboard displays the same sensor values as the Nextion display, with updates 0.1 second. The values are fetched using AJAX calls to the `/sensorData` endpoint and updated in real-time.
 
