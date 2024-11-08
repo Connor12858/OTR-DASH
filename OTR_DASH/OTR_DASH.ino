@@ -119,6 +119,9 @@ void setup() {
   // Start the server
   server.begin();
   Serial.println("Web server started");
+
+  // Send the ip address to the display
+  sendToNextion("page9.address.txt=\"" + String(WiFi.softAPIP()) + "\"");
 }
 
 void loop() {
@@ -150,9 +153,12 @@ void loop() {
 
   longitude += 0.1;
   if (longitude > 180) longitude = -180;
-float angle=300+(2.134*speed);
-if (angle>360) angle-=360;
+  float angle=300+(2.134*speed);
+  if (angle>360) angle-=360;
+
+
   // Update Nextion Display
+  //Individual pages
   sendToNextion("page1.z0.val=" + String(static_cast<int>(angle)));
   sendToNextion("page1.speed.txt=\"" + String(speed) + "\"");
   sendToNextion("page2.torque.txt=\"" + String(torque) + "\"");
@@ -160,13 +166,11 @@ if (angle>360) angle-=360;
   sendToNextion("page4.acceleration.txt=\"" + String(acceleration) + "\"");
   sendToNextion("page5.latitude.txt=\"" + String(latitude) + "\"");
   sendToNextion("page5.longitude.txt=\"" + String(longitude) + "\"");
-  sendToNextion("page5.longitude.txt=\"" + String(longitude) + "\"");
   sendToNextion("page6.current.txt=\"" + String(current) + "\"");
   sendToNextion("page7.voltage.txt=\"" + String(voltage) + "\"");
   sendToNextion("page6.current.txt=\"" + String(current) + "\"");
 
-
-
+  // Home page 
   sendToNextion("page8.torque.txt=\"" + String(torque) + "\"");
   sendToNextion("page8.batteryTemp.txt=\"" + String(batteryTemp) + "\"");
   sendToNextion("page8.acceleration.txt=\"" + String(acceleration) + "\"");
@@ -176,5 +180,6 @@ if (angle>360) angle-=360;
   sendToNextion("page8.current.txt=\"" + String(current) + "\"");
   sendToNextion("page8.voltage.txt=\"" + String(voltage) + "\"");
   sendToNextion("page8.current.txt=\"" + String(current) + "\"");
+  
   delay(100); // Delay for stability
 }
