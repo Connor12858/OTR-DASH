@@ -170,7 +170,7 @@ void loop() {
   sendToNextion("page7.voltage.txt=\"" + String(voltage) + "\"");
   sendToNextion("page6.current.txt=\"" + String(current) + "\"");
 
-  // Home page 
+  // Advance page 
   sendToNextion("page8.torque.txt=\"" + String(torque) + "\"");
   sendToNextion("page8.batteryTemp.txt=\"" + String(batteryTemp) + "\"");
   sendToNextion("page8.acceleration.txt=\"" + String(acceleration) + "\"");
